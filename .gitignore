@@ -1,0 +1,54 @@
+# Build directories
+build/
+/build/
+/CMakeFiles/
+/CMakeCache.txt
+/*.cmake
+/*.make
+/*.ninja
+
+# Compiled object files and libraries
+*.o
+*.obj
+*.lo
+*.la
+*.al
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+*.exe
+
+# Cache directories
+.cache/
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+*.bak
+*.orig
+
+# Coverage files
+*.gcno
+*.gcda
+*.gcov
+
+# CTest files
+Testing/
+
+# Other CMake artifacts
+Makefile
+cmake_install.cmake
