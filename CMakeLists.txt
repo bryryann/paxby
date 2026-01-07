@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.1)
 
 project(
-    cpp-project-template
+    paxby
     VERSION 1.0.0
     LANGUAGES CXX
 )
@@ -15,16 +15,30 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # options
 option(ENABLE_WARNINGS "Enable compiler warnings" ON)
 
-# subdirectories
-add_subdirectory(src/libexample)
+# libraries and subdirectories
+add_library(paxby)
 
-add_executable(cpp-project-template-app 
+add_library(paxby::paxby
+    ALIAS paxby
+)
+
+add_subdirectory(src/core)
+
+target_include_directories(paxby
+    PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+)
+
+target_compile_features(paxby PUBLIC cxx_std_20)
+
+add_executable(paxby-app 
     src/main.cpp
 )
 
-target_link_libraries(cpp-project-template-app 
+target_link_libraries(paxby-app 
     PRIVATE
-        cpp-project-template
+        paxby
 )
 
 # warnings

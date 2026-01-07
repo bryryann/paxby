@@ -1,7 +1,7 @@
-#include <libexample/library.h>
+#include "core/core.h"
 
 int main() {
-    libexample::example_function();
+    start();
 
     return 0;
 }
