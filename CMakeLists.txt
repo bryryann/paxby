@@ -23,6 +23,7 @@ add_library(paxby::paxby
 )
 
 add_subdirectory(src/core)
+add_subdirectory(src/cli)
 
 target_include_directories(paxby
     PUBLIC
