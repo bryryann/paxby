@@ -1,10 +1,13 @@
 #include "core/core.h"
+#include "core/context.h"
 #include "cli/command_parser.h"
 
 int main(int argc, char *argv[]) {
-    switch (cli::parse_command(argc, argv)) {
+    core::Context ctx;
+
+    switch (cli::parse_command(argc, argv, ctx)) {
         case cli::CommandResult::Run:
-            core::run();
+            core::run(ctx);
             return 0;
         case cli::CommandResult::ExitSuccess:
             return 0;

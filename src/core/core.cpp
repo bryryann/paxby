@@ -4,8 +4,12 @@
 
 namespace core {
 
-void run() {
-    std::cout << "running..." << std::endl;
+void run(const Context &ctx) {
+    if (ctx.verbose) {
+        std::cout << "Verbose mode enabled\n";
+    }
+
+    std::cout << "Running...\n";
 }
 
 }

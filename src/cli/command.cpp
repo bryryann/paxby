@@ -5,9 +5,9 @@
 namespace cli {
 
 struct option options[] = {
-    {"help",  no_argument,       nullptr, 'h'},
-    // {"name",  required_argument, nullptr, 'n'},
-    {nullptr, 0,                 nullptr,  0 }
+    {"help",    no_argument,       nullptr, 'h'},
+    {"verbose", no_argument,       nullptr, 'v'},
+    {nullptr,   0,                 nullptr,  0 }
 };
 
 void print_help() {

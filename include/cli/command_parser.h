@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/context.h"
+
 namespace cli {
 
 enum class CommandResult {
@@ -8,6 +10,6 @@ enum class CommandResult {
     ExitFailure
 };
 
-CommandResult parse_command(int argc, char **argv);
+CommandResult parse_command(int argc, char **argv, core::Context &ctx);
 
 }
