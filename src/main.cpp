@@ -1,21 +1,14 @@
 #include "core/core.h"
-#include "cli/command.h"
-
-#include <getopt.h>
+#include "cli/command_parser.h"
 
 int main(int argc, char *argv[]) {
-    int opt;
-
-    while ((opt = getopt_long(argc, argv, "h", cli::options, nullptr)) != -1) {
-        switch (opt) {
-            case 'h':
-                cli::print_help();
-                return 0;
-            default:
-                return 1;
-        }
+    switch (cli::parse_command(argc, argv)) {
+        case cli::CommandResult::Run:
+            core::run();
+            return 0;
+        case cli::CommandResult::ExitSuccess:
+            return 0;
+        case cli::CommandResult::ExitFailure:
+            return 1;
     }
-
-    core::run();
-    return 0;
 }
