@@ -1,4 +1,5 @@
 #include "core/core.h"
+#include "core/commands.h"
 
 #include <iostream>
 
@@ -11,10 +12,13 @@ void run(const Context &ctx) {
 
     switch (ctx.command) {
         case Command::Init:
-            std::cout << "init on: " << ctx.init_dir << "\n";
+            commands::run_init(ctx);
+
             break;
+
         case Command::None:
             std::cout << "none\n";
+
             break;
     }
 }
