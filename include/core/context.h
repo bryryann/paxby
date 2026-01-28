@@ -1,5 +1,7 @@
 #pragma once
 
+#include <filesystem>
+
 namespace core {
 
 enum class Command {
@@ -12,6 +14,8 @@ struct Context {
     bool verbose = false;
 
     Command command = Command::None;
+
+    std::filesystem::path init_dir = ".";
 };
 
 }

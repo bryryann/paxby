@@ -35,6 +35,14 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
 
     if (cmd == "init") {
         ctx.command = core::Command::Init;
+
+        int args_start = optind + 1;
+
+        if (args_start < argc) {
+            ctx.init_dir = argv[args_start];
+        } else {
+            ctx.init_dir = ".";
+        }
     } else {
         std::cerr << "Unknown command: " << cmd << "\n";
         return CommandResult::ExitFailure;

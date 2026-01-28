@@ -11,10 +11,10 @@ void run(const Context &ctx) {
 
     switch (ctx.command) {
         case Command::Init:
-            std::cout << "init";
+            std::cout << "init on: " << ctx.init_dir << "\n";
             break;
         case Command::None:
-            std::cout << "none";
+            std::cout << "none\n";
             break;
     }
 }
