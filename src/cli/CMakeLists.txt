@@ -1,5 +1,5 @@
 target_sources(paxby
     PRIVATE
-        command.cpp
+        cli.cpp
         command_parser.cpp
 )

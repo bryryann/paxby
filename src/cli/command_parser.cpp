@@ -1,4 +1,4 @@
-#include "cli/command.h"
+#include "cli/cli.h"
 #include "cli/command_parser.h"
 
 #include <iostream>
