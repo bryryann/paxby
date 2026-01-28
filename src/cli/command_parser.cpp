@@ -1,6 +1,7 @@
 #include "cli/command.h"
 #include "cli/command_parser.h"
 
+#include <iostream>
 #include <getopt.h>
 
 namespace cli {
@@ -23,6 +24,20 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
             default:
                 return CommandResult::ExitFailure;
         }
+    }
+
+    if (optind >= argc) {
+        std::cerr << "No command specified\n";
+        return CommandResult::ExitFailure;
+    }
+
+    std::string cmd = optind[argv];
+
+    if (cmd == "init") {
+        ctx.command = core::Command::Init;
+    } else {
+        std::cerr << "Unknown command: " << cmd << "\n";
+        return CommandResult::ExitFailure;
     }
 
     return CommandResult::Run;

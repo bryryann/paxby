@@ -9,7 +9,14 @@ void run(const Context &ctx) {
         std::cout << "Verbose mode enabled\n";
     }
 
-    std::cout << "Running...\n";
+    switch (ctx.command) {
+        case Command::Init:
+            std::cout << "init";
+            break;
+        case Command::None:
+            std::cout << "none";
+            break;
+    }
 }
 
 }
