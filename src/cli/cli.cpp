@@ -1,3 +1,8 @@
+// cli.cpp
+//
+// Settings and configurations used by the cli command parsing.
+// Also define helper functions.
+
 #include "cli/cli.h"
 
 #include <iostream>

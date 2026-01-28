@@ -1,3 +1,7 @@
+// commands.cpp
+//
+// Implement the main commands and subcommands functions.
+
 #include "core/commands.h"
 
 #include <fstream>
@@ -7,9 +11,13 @@
 
 namespace core::commands {
 
+// Initializes a new project directory and default configuration files.
+//
+// Idempotent: existing files are preserved.
 void run_init(const Context &ctx) {
     namespace fs = std::filesystem;
 
+    // Helper for verbose output
     auto verbose = [&](const std::string& msg) {
         if (ctx.verbose) {
             std::cout <<  msg << "\n";
@@ -19,6 +27,7 @@ void run_init(const Context &ctx) {
     fs::path dir = ctx.init_dir / ".paxby";
     verbose("Initializing project in " + ctx.init_dir.string());
 
+    // Create the root directory if it does not exist
     std::error_code ec;
     fs::create_directories(dir, ec);
     if (ec) {
@@ -27,6 +36,7 @@ void run_init(const Context &ctx) {
         );
     }
 
+    // Default files created during initialization.
     std::unordered_map<std::string, std::string> files = {
         {"tasks.json", "{ \"tasks\": [] }\n"},
         {"config.json", "{}\n"},

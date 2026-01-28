@@ -1,3 +1,7 @@
+// main.cpp
+//
+// Application entrypoint.
+
 #include "core/core.h"
 #include "core/context.h"
 #include "cli/command_parser.h"

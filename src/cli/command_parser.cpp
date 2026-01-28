@@ -1,3 +1,8 @@
+// command_parser.cpp
+//
+// Parse commands, subcommands, options and arguments.
+// Create context object and decide whether to run or exit application.
+
 #include "cli/cli.h"
 #include "cli/command_parser.h"
 
@@ -6,6 +11,10 @@
 
 namespace cli {
 
+// Parse user command.
+//
+// Extract options, subcommands and arguments, creating appropriate context object
+// and deciding whether to exit or run application.
 CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
     optind = 1;
 

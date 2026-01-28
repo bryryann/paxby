@@ -1,3 +1,8 @@
+// core.h
+//
+// Define business-logic related code application dependencies.
+// Independent from any other library.
+
 #pragma once
 
 #include "core/context.h"

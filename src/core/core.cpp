@@ -1,3 +1,8 @@
+// core.cpp
+//
+// Define business-logic related code application dependencies.
+// Independent from any other library.
+
 #include "core/core.h"
 #include "core/commands.h"
 
