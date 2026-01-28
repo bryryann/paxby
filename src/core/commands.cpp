@@ -10,11 +10,17 @@ namespace core::commands {
 void run_init(const Context &ctx) {
     namespace fs = std::filesystem;
 
+    auto verbose = [&](const std::string& msg) {
+        if (ctx.verbose) {
+            std::cout <<  msg << "\n";
+        }
+    };
+
     fs::path dir = ctx.init_dir / ".paxby";
+    verbose("Initializing project in " + ctx.init_dir.string());
 
     std::error_code ec;
     fs::create_directories(dir, ec);
-
     if (ec) {
         throw std::runtime_error(
             "Failed to create directory '" + dir.string() + "': " + ec.message()
@@ -36,6 +42,8 @@ void run_init(const Context &ctx) {
                 );
             }
 
+            verbose("Skipped existing file " + file.string());
+
             continue;
         }
 
@@ -45,6 +53,11 @@ void run_init(const Context &ctx) {
         }
 
         out << content;
+        verbose("Created file " + file.string());
+    }
+
+    if (!ctx.verbose) {
+        std::cout << "Initialize project in " << dir.parent_path().string() << "\n";
     }
 }
 
