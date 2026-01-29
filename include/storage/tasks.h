@@ -23,7 +23,7 @@ struct Task {
     std::string title;
     bool completed;
     std::vector<std::string> tags;
-    Priority priority = Priority::Low;
+    Priority priority;
     std::string created_at;
     std::optional<std::string> due_date;
 };
