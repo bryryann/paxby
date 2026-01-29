@@ -16,6 +16,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 option(ENABLE_WARNINGS "Enable compiler warnings" ON)
 
 # libraries and subdirectories
+find_package(nlohmann_json REQUIRED)
+
 add_library(paxby)
 
 add_library(paxby::paxby
@@ -40,6 +42,7 @@ add_executable(paxby-app
 target_link_libraries(paxby-app 
     PRIVATE
         paxby
+        nlohmann_json::nlohmann_json
 )
 
 # warnings
