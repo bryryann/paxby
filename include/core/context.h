@@ -5,6 +5,7 @@
 #pragma once
 
 #include <filesystem>
+#include <vector>
 
 namespace core {
 
@@ -12,6 +13,7 @@ namespace core {
 enum class Command {
     None,
     Init,
+    Add,
 };
 
 // Runtime configuration passed to all CLI commands.
@@ -21,7 +23,14 @@ struct Context {
 
     Command command = Command::None;
 
+    // 'init' properties
     std::filesystem::path init_dir = ".";
+
+    // 'add' properties
+    std::string title;
+    std::vector<std::string> tags;
+    std::string priority;
+    std::string due_date;
 };
 
 }

@@ -19,7 +19,7 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
     optind = 1;
 
     int opt;
-    while ((opt = getopt_long(argc, argv, "hv", options, nullptr)) != -1) {
+    while ((opt = getopt_long(argc, argv, "+hv", options, nullptr)) != -1) {
         switch (opt) {
             case 'h':
                 ctx.show_help = true;
@@ -40,19 +40,51 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
         return CommandResult::ExitFailure;
     }
 
-    std::string cmd = optind[argv];
+    std::string cmd = argv[optind++];
 
+    // --- init ---
     if (cmd == "init") {
         ctx.command = core::Command::Init;
 
-        int args_start = optind + 1;
-
-        if (args_start < argc) {
-            ctx.init_dir = argv[args_start];
+        if (optind < argc) {
+            ctx.init_dir = argv[optind];
         } else {
             ctx.init_dir = ".";
         }
-    } else {
+    }
+    // --- add ---
+    else if (cmd == "add") {
+        ctx.command = core::Command::Add;
+
+        if (optind >= argc) {
+            std::cerr << "No content provided for add\n";
+            return CommandResult::ExitFailure;
+        }
+
+        ctx.title = argv[optind++];
+
+        int add_opt;
+        while ((add_opt = getopt_long(argc, argv, "t:p:d:", add_options, nullptr)) != -1) {
+            switch (add_opt) {
+                case 't':
+                    ctx.tags.push_back(optarg);
+                    break;
+
+                case 'p':
+                    ctx.priority = optarg;
+                    break;
+
+                case 'd':
+                    ctx.due_date = optarg;
+                    break;
+
+                default:
+                    return CommandResult::ExitFailure;
+            }
+        }
+    }
+    // --- unknown command ---
+    else {
         std::cerr << "Unknown command: " << cmd << "\n";
         return CommandResult::ExitFailure;
     }

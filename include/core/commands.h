@@ -10,4 +10,6 @@ namespace core::commands {
 
 void run_init(const Context &ctx);
 
+void run_add(const Context &ctx);
+
 }

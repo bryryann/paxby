@@ -9,6 +9,8 @@
 #include <unordered_map>
 #include <iostream>
 
+// TODO: Move commands to a separate lib.
+// Since it is dependant of other libraries such as storage, it' no longer fitting to be in core.
 namespace core::commands {
 
 // Initializes a new project directory and default configuration files.
@@ -68,6 +70,18 @@ void run_init(const Context &ctx) {
 
     if (!ctx.verbose) {
         std::cout << "Initialize project in " << dir.parent_path().string() << "\n";
+    }
+}
+
+// TODO: Implement 'add' functionality. 
+// Currently it only prints the generated task for debugging purposes
+void run_add(const Context &ctx) {
+    std::cout << ctx.title << '\n';
+    std::cout << ctx.priority << '\n';
+    std::cout << ctx.due_date << '\n';
+
+    for (std::string s : ctx.tags) {
+        std::cout << s << '\n';
     }
 }
 

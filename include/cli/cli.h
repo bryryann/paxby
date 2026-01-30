@@ -11,6 +11,8 @@ namespace cli {
 
 extern struct option options[];
 
+extern struct option add_options[];
+
 void print_help();
 
 }

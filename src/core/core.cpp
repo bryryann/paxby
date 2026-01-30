@@ -21,6 +21,11 @@ void run(const Context &ctx) {
 
             break;
 
+        case Command::Add:
+            commands::run_add(ctx);
+
+            break;
+
         case Command::None:
             std::cout << "none\n";
 
