@@ -5,6 +5,7 @@
 
 #include "cli/cli.h"
 #include "cli/command_parser.h"
+#include "utils/string.h"
 
 #include <iostream>
 #include <getopt.h>
@@ -67,7 +68,7 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
         while ((add_opt = getopt_long(argc, argv, "t:p:d:", add_options, nullptr)) != -1) {
             switch (add_opt) {
                 case 't':
-                    ctx.tags.push_back(optarg);
+                    utils::add_comma_separated(ctx.tags, optarg);
                     break;
 
                 case 'p':
