@@ -4,18 +4,18 @@
 
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "core/tasks.h"
 
-#include "storage/tasks.h"
+#include <nlohmann/json.hpp>
 
 namespace storage::json {
 
-std::string priority_to_string(Priority p);
+std::string priority_to_string(core::Priority p);
 
-Priority priority_from_string(const std::string& s);
+core::Priority priority_from_string(const std::string& s);
 
-void to_json(nlohmann::json& j, const Task& t);
+void to_json(nlohmann::json& j, const core::Task& t);
 
-void from_json(nlohmann::json& j, Task& t);
+void from_json(nlohmann::json& j, core::Task& t);
 
 }

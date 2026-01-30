@@ -4,6 +4,7 @@
 // Also define helper functions.
 
 #include "cli/cli.h"
+#include "commands/commands.h"
 
 #include <iostream>
 
@@ -27,6 +28,30 @@ void print_help() {
               << "options:\n"
               << " -h, --help    Display this help and exit.\n"
               << " -v, --verbose Toggle verbose mode\n";
+}
+
+
+void run(const core::Context &ctx) {
+    if (ctx.verbose) {
+        std::cout << "Verbose mode enabled\n";
+    }
+
+    switch (ctx.command) {
+        case core::Command::Init:
+            commands::run_init(ctx);
+
+            break;
+
+        case core::Command::Add:
+            commands::run_add(ctx);
+
+            break;
+
+        case core::Command::None:
+            std::cout << "none\n";
+
+            break;
+    }
 }
 
 }

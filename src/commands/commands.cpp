@@ -2,21 +2,19 @@
 //
 // Implement the main commands and subcommands functions.
 
-#include "core/commands.h"
+#include "commands/commands.h"
 
 #include <fstream>
 #include <filesystem>
 #include <unordered_map>
 #include <iostream>
 
-// TODO: Move commands to a separate lib.
-// Since it is dependant of other libraries such as storage, it' no longer fitting to be in core.
-namespace core::commands {
+namespace commands {
 
 // Initializes a new project directory and default configuration files.
 //
 // Idempotent: existing files are preserved.
-void run_init(const Context &ctx) {
+void run_init(const core::Context &ctx) {
     namespace fs = std::filesystem;
 
     // Helper for verbose output
@@ -75,7 +73,7 @@ void run_init(const Context &ctx) {
 
 // TODO: Implement 'add' functionality. 
 // Currently it only prints the generated task for debugging purposes
-void run_add(const Context &ctx) {
+void run_add(const core::Context &ctx) {
     std::cout << ctx.title << '\n';
     std::cout << ctx.priority << '\n';
     std::cout << ctx.due_date << '\n';

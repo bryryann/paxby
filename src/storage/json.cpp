@@ -8,6 +8,8 @@ namespace storage::json {
 
 using json = nlohmann::json;
 
+using namespace core;
+
 inline std::string priority_to_string(Priority p) { 
     switch (p) {
         case Priority::Low:    return "low";

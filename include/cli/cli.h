@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include "core/context.h"
+
 #include <getopt.h>
 
 namespace cli {
@@ -14,5 +16,7 @@ extern struct option options[];
 extern struct option add_options[];
 
 void print_help();
+
+void run(const core::Context &ctx);
 
 }

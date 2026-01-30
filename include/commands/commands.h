@@ -6,10 +6,10 @@
 
 #include "core/context.h"
 
-namespace core::commands {
+namespace commands {
 
-void run_init(const Context &ctx);
+void run_init(const core::Context &ctx);
 
-void run_add(const Context &ctx);
+void run_add(const core::Context &ctx);
 
 }

@@ -1,6 +1,6 @@
 // tasks.h
 //
-// Contains objects and enums related to the task storage structure.
+// Task related structs and properties
 
 #pragma once
 
@@ -8,7 +8,7 @@
 #include <vector>
 #include <optional>
 
-namespace storage {
+namespace core {
 
 // Task priority
 enum Priority {
