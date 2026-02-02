@@ -3,6 +3,7 @@
 // Implement the main commands and subcommands functions.
 
 #include "commands/commands.h"
+#include "core/tasks.h"
 
 #include <fstream>
 #include <filesystem>

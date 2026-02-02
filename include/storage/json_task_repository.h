@@ -1,0 +1,24 @@
+#pragma once
+
+#include "core/tasks.h"
+#include "storage/task_repository.h"
+
+#include <filesystem>
+
+namespace storage {
+
+class JsonTaskRepository : public TaskRepository {
+public:
+    explicit JsonTaskRepository(const std::filesystem::path& app_dir);
+
+    std::vector<core::Task> get_all() override;
+    void save_all(const std::vector<core::Task>& tasks) override;
+    void add(const core::Task& task) override;
+
+private:
+    std::filesystem::path file_path_;
+
+    void ensureFileExists();
+};
+
+}

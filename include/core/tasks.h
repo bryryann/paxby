@@ -26,6 +26,22 @@ struct Task {
     Priority priority;
     std::string created_at;
     std::optional<std::string> due_date;
+
+    Task(int id,
+         std::string title,
+         bool completed,
+         std::vector<std::string> tags = {},
+         Priority priority = Priority::Medium,
+         std::string created_at = nullptr,
+         std::optional<std::string> due_date = std::nullopt
+    ) : id(id),
+        title(std::move(title)),
+        completed(completed),
+        tags(std::move(tags)),
+        priority(priority),
+        created_at(std::move(created_at)),
+        due_date(std::move(due_date))
+    {}
 };
 
 }
