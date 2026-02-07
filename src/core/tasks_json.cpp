@@ -1,14 +1,10 @@
-// json.cpp
-//
-// Json parsing and mapping.
+#include "core/tasks_json.h"
 
-#include "storage/json.h"
+#include <nlohmann/json.hpp>
 
-namespace storage::json {
+namespace core {
 
 using json = nlohmann::json;
-
-using namespace core;
 
 inline std::string priority_to_string(Priority p) { 
     switch (p) {
@@ -28,6 +24,7 @@ inline Priority priority_from_string(const std::string& s) {
     throw std::runtime_error("Unknown priority: " + s);
 }
 
+
 void to_json(json& j, const Task& t) {
     j = json{
         {"id", t.id},
@@ -45,7 +42,7 @@ void to_json(json& j, const Task& t) {
     };
 }
 
-void from_json(json& j, Task& t) {
+void from_json(const json& j, Task& t) {
     j.at("id").get_to(t.id);
     j.at("title").get_to(t.title);
     j.at("completed").get_to(t.completed);
@@ -65,4 +62,4 @@ void from_json(json& j, Task& t) {
     }
 }
 
-} // namespace storage::json
+}

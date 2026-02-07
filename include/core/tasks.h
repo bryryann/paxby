@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <iostream>
+#include <string>
 #include <vector>
 #include <optional>
 
@@ -27,12 +27,14 @@ struct Task {
     std::string created_at;
     std::optional<std::string> due_date;
 
+    Task() = default;
+
     Task(int id,
          std::string title,
          bool completed,
          std::vector<std::string> tags = {},
          Priority priority = Priority::Medium,
-         std::string created_at = nullptr,
+         std::string created_at = "",
          std::optional<std::string> due_date = std::nullopt
     ) : id(id),
         title(std::move(title)),
