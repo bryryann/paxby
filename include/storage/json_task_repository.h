@@ -18,7 +18,7 @@ public:
 private:
     std::filesystem::path file_path_;
 
-    void ensure_file_exists();
+    void validate_storage();
 };
 
 }
