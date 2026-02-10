@@ -11,6 +11,8 @@ inline std::string priority_to_string(Priority p) {
         case Priority::Low:    return "low";
         case Priority::Medium: return "medium";
         case Priority::High:   return "high";
+        default:
+            throw std::runtime_error("Unhandled Priority enum value.");
     }
 
     throw std::runtime_error("Invalid priority");

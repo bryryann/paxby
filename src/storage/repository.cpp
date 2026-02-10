@@ -34,10 +34,23 @@ std::vector<core::Task> JsonTaskRepository::get_all() {
 void JsonTaskRepository::save_all(const std::vector<core::Task>& tasks) {
     validate_storage();
 
+    nlohmann::json j;
+    j["tasks"] = tasks;
+
+    std::ofstream out(file_path_);
+    if (!out) {
+        throw std::runtime_error("Failed to open tasks.json for writing");
+    }
+
+    out << j.dump(2);
 }
 
 void JsonTaskRepository::add(const core::Task& task) {
     validate_storage();
+
+    auto tasks = get_all();
+    tasks.push_back(task);
+    save_all(tasks);
 
 }
 
