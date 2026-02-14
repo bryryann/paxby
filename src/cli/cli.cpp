@@ -31,7 +31,7 @@ void print_help() {
 }
 
 
-void run(const core::Context &ctx) {
+void run(const core::Context &ctx, storage::JsonTaskRepository& repo) {
     if (ctx.verbose) {
         std::cout << "Verbose mode enabled\n";
     }
@@ -43,7 +43,7 @@ void run(const core::Context &ctx) {
             break;
 
         case core::Command::Add:
-            commands::run_add(ctx);
+            commands::run_add(ctx, repo);
 
             break;
 

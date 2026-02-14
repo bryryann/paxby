@@ -3,7 +3,9 @@
 // Implement the main commands and subcommands functions.
 
 #include "commands/commands.h"
-#include "core/tasks.h"
+#include "core/tasks_json.h"
+#include "storage/json_task_repository.h"
+#include "utils/storage.h"
 
 #include <fstream>
 #include <filesystem>
@@ -72,16 +74,24 @@ void run_init(const core::Context &ctx) {
     }
 }
 
-// TODO: Implement 'add' functionality. 
-// Currently it only prints the generated task for debugging purposes
-void run_add(const core::Context &ctx) {
-    std::cout << ctx.title << '\n';
-    std::cout << ctx.priority << '\n';
-    std::cout << ctx.due_date << '\n';
+void run_add(const core::Context &ctx, storage::JsonTaskRepository& repo) {
+    auto tasks = repo.get_all();
 
-    for (std::string s : ctx.tags) {
-        std::cout << s << '\n';
-    }
+    core::Task new_task(
+        utils::next_id(tasks),                     // id
+        ctx.title,                                 // title
+        false,                                     // completed
+        ctx.tags,                                  // tags
+        core::priority_from_string(ctx.priority),  // priority
+        utils::current_timestamp(),                // created_at
+        ctx.due_date.empty()                       // due_date
+            ? std::nullopt
+            : std::optional<std::string>(ctx.due_date)
+    );
+
+    repo.add(new_task);
+
+    std::cout << "Added task #" << new_task.id << " " << new_task.title << "\n";
 }
 
 }
