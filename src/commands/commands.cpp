@@ -23,7 +23,7 @@ void run_init(const core::Context &ctx) {
     // Helper for verbose output
     auto verbose = [&](const std::string& msg) {
         if (ctx.verbose) {
-            std::cout <<  msg << "\n";
+            std::cout << "[verbose] " << msg << "\n";
         }
     };
 
@@ -75,21 +75,50 @@ void run_init(const core::Context &ctx) {
 }
 
 void run_add(const core::Context &ctx, storage::JsonTaskRepository& repo) {
+    std::cout << "Fetching existing tasks...\n";
     auto tasks = repo.get_all();
+    std::cout << "Loaded " << std::to_string(tasks.size()) << " existing tasks.\n";
+
+    auto verbose = [&](const std::string& msg) {
+        if (ctx.verbose) {
+            std::cout << "[verbose] " << msg << "\n";
+        }
+    };
+
+    auto new_id = utils::next_id(tasks);
+    verbose("Generated new task id: " + std::to_string(new_id));
+
+    auto priority = core::priority_from_string(ctx.priority);
+    verbose("Parsed priority: " + ctx.priority);
+
+    auto timestamp = utils::current_timestamp();
+    verbose("Generated timestamp: " + timestamp);
+
+    std::optional<std::string> due =
+        ctx.due_date.empty()
+            ? std::nullopt
+            : std::optional<std::string>(ctx.due_date);
+
+    if (due) {
+        verbose("Due date set to: " + *due);
+    } else {
+        verbose("No due date specified.");
+    }
 
     core::Task new_task(
-        utils::next_id(tasks),                     // id
-        ctx.title,                                 // title
-        false,                                     // completed
-        ctx.tags,                                  // tags
-        core::priority_from_string(ctx.priority),  // priority
-        utils::current_timestamp(),                // created_at
-        ctx.due_date.empty()                       // due_date
-            ? std::nullopt
-            : std::optional<std::string>(ctx.due_date)
+        new_id,    // id
+        ctx.title, // title
+        false,     // completed
+        ctx.tags,  // tags
+        priority,  // priority
+        timestamp, // created_at
+        due        // due
     );
 
+    verbose("Creating task: \"" + ctx.title + "\"");
+
     repo.add(new_task);
+    verbose("Task persisted to repository.");
 
     std::cout << "Added task #" << new_task.id << " " << new_task.title << "\n";
 }
