@@ -94,4 +94,9 @@ void run_add(const core::Context &ctx, storage::JsonTaskRepository& repo) {
     std::cout << "Added task #" << new_task.id << " " << new_task.title << "\n";
 }
 
+// TODO: Implement run_list
+void run_list(const core::Context &ctx, storage::JsonTaskRepository &repo) {
+    std::cout << "list\n";
+}
+
 }

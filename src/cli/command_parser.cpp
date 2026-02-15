@@ -84,6 +84,17 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
             }
         }
     }
+    // --- list ---
+    else if (cmd == "list") {
+        ctx.command = core::Command::List;
+
+        if (optind < argc) {
+            ctx.init_dir = argv[optind];
+        } else {
+            ctx.init_dir = ".";
+        }
+    }
+
     // --- unknown command ---
     else {
         std::cerr << "Unknown command: " << cmd << "\n";

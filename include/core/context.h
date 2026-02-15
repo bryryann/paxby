@@ -14,6 +14,7 @@ enum class Command {
     None,
     Init,
     Add,
+    List,
 };
 
 // Runtime configuration passed to all CLI commands.

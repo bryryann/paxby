@@ -47,6 +47,11 @@ void run(const core::Context &ctx, storage::JsonTaskRepository& repo) {
 
             break;
 
+        case core::Command::List:
+            commands::run_list(ctx, repo);
+
+            break;
+
         case core::Command::None:
             std::cout << "none\n";
 

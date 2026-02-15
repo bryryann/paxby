@@ -13,4 +13,6 @@ void run_init(const core::Context &ctx);
 
 void run_add(const core::Context &ctx, storage::JsonTaskRepository& repo);
 
+void run_list(const core::Context &ctx, storage::JsonTaskRepository& repo);
+
 }
