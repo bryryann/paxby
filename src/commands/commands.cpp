@@ -6,6 +6,7 @@
 #include "core/tasks_json.h"
 #include "storage/json_task_repository.h"
 #include "utils/storage.h"
+#include "utils/string.h"
 
 #include <fstream>
 #include <filesystem>
@@ -125,7 +126,21 @@ void run_add(const core::Context &ctx, storage::JsonTaskRepository& repo) {
 
 // TODO: Implement run_list
 void run_list(const core::Context &ctx, storage::JsonTaskRepository &repo) {
-    std::cout << "list\n";
+    std::cout << "Fetching existing tasks...\n";
+
+    auto tasks = repo.get_all();
+    int len = tasks.size();
+
+    std::cout << "Loaded " << std::to_string(len) << " existing tasks.\n";
+
+    if (len == 0) {
+        std::cout << "No tasks found.\n";
+        return;
+    }
+
+    for (core::Task t : tasks) {
+        std::cout << utils::task_to_string(t);
+    }
 }
 
 }
