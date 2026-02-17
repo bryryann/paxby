@@ -143,6 +143,9 @@ void run_list(const core::Context &ctx, storage::JsonTaskRepository &repo) {
     for (core::Task t : tasks) {
         std::cout << utils::task_to_string(t);
     }
+
+    std::cout << "page : "<< ctx.page_number << "\n";
+    std::cout << "size : "<< ctx.page_size << "\n";
 }
 
 }

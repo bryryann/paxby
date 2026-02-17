@@ -37,7 +37,7 @@ struct Context {
     std::filesystem::path list_dir = ".";
     bool paginated = true;
     std::size_t page_number = 0;
-    std::size_t page_size   = 0;
+    std::size_t page_size   = 10;
 };
 
 }

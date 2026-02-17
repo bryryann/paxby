@@ -16,7 +16,7 @@ public:
     virtual std::vector<core::Task> get_paginated(
         std::size_t page_number,
         std::size_t page_size
-    );
+    ) = 0;
 
     virtual void save_all(const std::vector<core::Task>& tasks) = 0;
 

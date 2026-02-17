@@ -91,7 +91,7 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
 
         ctx.paginated = true;
         ctx.page_number = 0;
-        ctx.page_size = 0;
+        ctx.page_size = 10;
 
         optind = 2;
 
