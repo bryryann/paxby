@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <fstream>
 #include <nlohmann/json.hpp>
 
@@ -29,6 +30,54 @@ std::vector<core::Task> JsonTaskRepository::get_all() {
     }
 
     return j.at("tasks").get<std::vector<core::Task>>();
+}
+
+std::vector<core::Task> JsonTaskRepository::get_paginated(
+    std::size_t page_number,
+    std::size_t page_size
+) {
+    validate_storage();
+
+    std::ifstream in(file_path_);
+    nlohmann::json j;
+
+    try {
+        in >> j;
+    } catch (const nlohmann::json::parse_error&) {
+        throw std::runtime_error(
+            "Failed to parse tasks.json (file may be corrupted)."
+        );
+    }
+
+    if (!j.contains("tasks") || !j["tasks"].is_array()) {
+        throw std::runtime_error("Invalid tasks file format");
+    }
+
+    // reference to tasks json array
+    const auto& tasks_json = j["tasks"];
+
+    std::size_t total = tasks_json.size();
+
+    if (page_size == 0) {
+        return {};
+    }
+
+    std::size_t start = page_number * page_size;
+
+    if (start >= total) {
+        throw std::runtime_error("Invalid page index - out of bounds.");
+    }
+
+    std::size_t end = std::min(start + page_size, total);
+
+    std::vector<core::Task> result;
+    result.reserve(end - start);
+
+    for (std::size_t i = start; i < end; ++i) {
+        result.push_back(tasks_json.at(i).get<core::Task>());
+    }
+
+    return result;
 }
 
 void JsonTaskRepository::save_all(const std::vector<core::Task>& tasks) {

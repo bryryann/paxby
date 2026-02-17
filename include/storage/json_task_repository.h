@@ -12,7 +12,14 @@ public:
     explicit JsonTaskRepository(const std::filesystem::path& app_dir);
 
     std::vector<core::Task> get_all() override;
+
+    std::vector<core::Task> get_paginated(
+        std::size_t page_number, 
+        std::size_t page_size
+    ) override;
+
     void save_all(const std::vector<core::Task>& tasks) override;
+
     void add(const core::Task& task) override;
 
 private:
