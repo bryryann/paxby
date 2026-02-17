@@ -44,6 +44,9 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
 
     std::string cmd = argv[optind++];
 
+    int sub_argc = argc - optind + 1;
+    char **sub_argv = argv + optind - 1;
+
     // --- init ---
     if (cmd == "init") {
         ctx.command = core::Command::Init;
@@ -93,10 +96,10 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
         ctx.page_number = 0;
         ctx.page_size = 10;
 
-        optind = 2;
+        optind = 1;
 
         int list_opt;
-        while ((list_opt = getopt_long(argc, argv, "fp:s:", list_options, nullptr)) != -1) {
+        while ((list_opt = getopt_long(sub_argc, sub_argv, "fp:s:", list_options, nullptr)) != -1) {
             switch (list_opt) {
                 case 'f':
                     ctx.paginated = false;
@@ -123,8 +126,8 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
             }
         }
 
-        if (optind < argc) {
-            ctx.list_dir = argv[optind];
+        if (optind < sub_argc) {
+            ctx.list_dir = sub_argv[optind];
         }
     }
 

@@ -89,6 +89,7 @@ void run_add(const core::Context &ctx, storage::JsonTaskRepository& repo) {
     auto new_id = utils::next_id(tasks);
     verbose("Generated new task id: " + std::to_string(new_id));
 
+    std::cout << ctx.priority << std::endl;
     auto priority = core::priority_from_string(ctx.priority);
     verbose("Parsed priority: " + ctx.priority);
 
@@ -130,7 +131,7 @@ void run_add(const core::Context &ctx, storage::JsonTaskRepository& repo) {
 void run_list(const core::Context &ctx, storage::JsonTaskRepository &repo) {
     std::cout << "Fetching existing tasks...\n";
 
-    auto tasks = repo.get_all();
+    auto tasks = repo.get_paginated(ctx.page_number, ctx.page_size);
     int len = tasks.size();
 
     std::cout << "Loaded " << std::to_string(len) << " existing tasks.\n";
