@@ -32,6 +32,12 @@ struct Context {
     std::vector<std::string> tags;
     std::string priority;
     std::string due_date;
+
+    // 'list' properties
+    std::filesystem::path list_dir = ".";
+    bool paginated = true;
+    std::size_t page_number = 0;
+    std::size_t page_size   = 0;
 };
 
 }

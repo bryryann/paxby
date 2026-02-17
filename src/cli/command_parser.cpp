@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <getopt.h>
+#include <string>
 
 namespace cli {
 
@@ -88,10 +89,42 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
     else if (cmd == "list") {
         ctx.command = core::Command::List;
 
+        ctx.paginated = true;
+        ctx.page_number = 0;
+        ctx.page_size = 0;
+
+        optind = 2;
+
+        int list_opt;
+        while ((list_opt = getopt_long(argc, argv, "fp:s:", list_options, nullptr)) != -1) {
+            switch (list_opt) {
+                case 'f':
+                    ctx.paginated = false;
+                    break;
+
+                case 'p':
+                    try {
+                        ctx.page_number = std::stoull(optarg);
+                    } catch (...) {
+                        return CommandResult::ExitFailure;
+                    }
+                    break;
+
+                case 's':
+                    try {
+                        ctx.page_size = std::stoull(optarg);
+                    } catch (...) {
+                        return CommandResult::ExitFailure;
+                    }
+                    break;
+
+                default:
+                    return CommandResult::ExitFailure;
+            }
+        }
+
         if (optind < argc) {
-            ctx.init_dir = argv[optind];
-        } else {
-            ctx.init_dir = ".";
+            ctx.list_dir = argv[optind];
         }
     }
 

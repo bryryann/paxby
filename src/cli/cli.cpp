@@ -23,6 +23,13 @@ struct option add_options[] = {
     {nullptr,    0,                 nullptr,  0 },
 };
 
+struct option list_options[] = {
+    {"full",  no_argument,       nullptr, 'f'},
+    {"page",  required_argument, nullptr, 'p'},
+    {"size",  required_argument, nullptr, 's'},
+    {nullptr, 0,                 nullptr,  0 }
+};
+
 void print_help() {
     std::cout << "usage: paxby [OPTION]... [ARG]...\n"
               << "options:\n"
