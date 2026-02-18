@@ -18,7 +18,8 @@ namespace commands {
 // Initializes a new project directory and default configuration files.
 //
 // Idempotent: existing files are preserved.
-void run_init(const core::Context &ctx) {
+// WARN: Ungraceful error handling.
+void run_init(const core::Context& ctx) {
     namespace fs = std::filesystem;
 
     // Helper for verbose output
@@ -75,7 +76,8 @@ void run_init(const core::Context &ctx) {
     }
 }
 
-void run_add(const core::Context &ctx, storage::JsonTaskRepository& repo) {
+// WARN: Ungraceful error handling.
+void run_add(const core::Context& ctx, storage::JsonTaskRepository& repo) {
     std::cout << "Fetching existing tasks...\n";
     auto tasks = repo.get_all();
     std::cout << "Loaded " << std::to_string(tasks.size()) << " existing tasks.\n";
@@ -126,7 +128,9 @@ void run_add(const core::Context &ctx, storage::JsonTaskRepository& repo) {
 }
 
 // TODO: Add filtering (completed, due, etc.)
-void run_list(const core::Context &ctx, storage::JsonTaskRepository &repo) {
+// TODO: Verbose mode.
+// WARN: Ungraceful error handling.
+void run_list(const core::Context& ctx, storage::JsonTaskRepository& repo) {
     std::cout << "Fetching existing tasks...\n";
 
     auto tasks = repo.get_paginated(ctx.page_number, ctx.page_size);
@@ -145,6 +149,16 @@ void run_list(const core::Context &ctx, storage::JsonTaskRepository &repo) {
 
     std::cout << "page : "<< ctx.page_number << "\n";
     std::cout << "size : "<< ctx.page_size << "\n";
+}
+
+// TODO: Verbose mode.
+// WARN: Ungraceful error handling.
+void run_show(const core::Context& ctx, storage::JsonTaskRepository& repo) {
+    std::cout << "Fetching task...\n";
+
+    auto task = repo.get_id(ctx.show_id);
+
+    std::cout << utils::task_detailed(task);
 }
 
 }
