@@ -13,6 +13,8 @@ public:
 
     std::vector<core::Task> get_all() override;
 
+    core::Task get_id(int id) override;
+
     std::vector<core::Task> get_paginated(
         std::size_t page_number, 
         std::size_t page_size

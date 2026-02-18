@@ -125,7 +125,6 @@ void run_add(const core::Context &ctx, storage::JsonTaskRepository& repo) {
     std::cout << "Added task #" << new_task.id << " " << new_task.title << "\n";
 }
 
-// TODO: Add pagination
 // TODO: Add filtering (completed, due, etc.)
 // TOOD: Add different print options (--compact, --detailed, etc.)
 void run_list(const core::Context &ctx, storage::JsonTaskRepository &repo) {

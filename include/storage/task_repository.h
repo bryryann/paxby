@@ -13,6 +13,8 @@ public:
 
     virtual std::vector<core::Task> get_all() = 0;
 
+    virtual core::Task get_id(int id) = 0;
+
     virtual std::vector<core::Task> get_paginated(
         std::size_t page_number,
         std::size_t page_size
