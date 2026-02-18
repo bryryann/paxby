@@ -15,6 +15,7 @@ enum class Command {
     Init,
     Add,
     List,
+    Show,
 };
 
 // Runtime configuration passed to all CLI commands.
@@ -38,6 +39,9 @@ struct Context {
     bool paginated = true;
     std::size_t page_number = 0;
     std::size_t page_size   = 10;
+
+    // 'show' properties
+    std::size_t show_id;
 };
 
 }

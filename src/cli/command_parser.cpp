@@ -130,6 +130,30 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
             ctx.list_dir = sub_argv[optind];
         }
     }
+    // --- show ---
+    else if (cmd == "show") {
+        ctx.command = core::Command::Show;
+
+        if (optind >= argc) {
+            std::cerr << "No ID provided for show\n";
+            return CommandResult::ExitFailure;
+        }
+
+        try {
+            auto tmp = std::stoull(argv[optind++]);
+
+            if (tmp > std::numeric_limits<size_t>::max()) {
+                std::cerr << "ID out of range\n";
+                return CommandResult::ExitFailure;
+            }
+
+            ctx.show_id = static_cast<size_t>(tmp);
+        }
+        catch (const std::exception&) {
+            std::cerr << "Invalid ID provided\n";
+            return CommandResult::ExitFailure;
+        }
+    }
 
     // --- unknown command ---
     else {

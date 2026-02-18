@@ -32,7 +32,7 @@ std::vector<core::Task> JsonTaskRepository::get_all() {
     return j.at("tasks").get<std::vector<core::Task>>();
 }
 
-core::Task JsonTaskRepository::get_id(int id) {
+core::Task JsonTaskRepository::get_id(std::size_t id) {
     validate_storage();
 
     std::ifstream in(file_path_);
