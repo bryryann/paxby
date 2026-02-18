@@ -20,7 +20,37 @@ void add_comma_separated(std::vector<std::string> &vector, const std::string &in
     }
 }
 
-std::string task_to_string(core::Task& task) {
+std::string task_compact(core::Task& task) {
+    std::ostringstream oss;
+
+    std::string status = task.completed ? "[x]" : "[ ]";
+
+    oss << status 
+        << " Task #" << task.id
+        << " " << task.title
+        << " (" << core::priority_to_string(task.priority) << ") ";
+
+    if (!task.tags.empty()) {
+        oss << "[";
+        for (size_t i = 0; i < task.tags.size(); ++i) {
+            oss << task.tags[i];
+            if (i != task.tags.size() - 1) {
+                oss << ",";
+            }
+        }
+        oss << "] ";
+    }
+
+    if (task.due_date.has_value()) {
+        oss << "due: " << task.due_date.value();
+    }
+
+    oss << "\n";
+
+    return oss.str();
+}
+
+std::string task_detailed(core::Task& task) {
     std::ostringstream oss;
 
     std::string status = task.completed ? "[x]" : "[ ]";
