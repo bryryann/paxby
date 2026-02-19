@@ -140,12 +140,21 @@ void run_add(const core::Context& ctx, storage::JsonTaskRepository& repo) {
 }
 
 // TODO: Add filtering (completed, due, etc.)
-// TODO: Verbose mode.
 void run_list(const core::Context& ctx, storage::JsonTaskRepository& repo) {
     std::vector<core::Task> tasks;
-    std::cout << "Fetching existing tasks...\n";
+
+    auto verbose = [&](const std::string& msg) {
+        if (ctx.verbose) {
+            std::cout << "[verbose] " << msg << '\n';
+        }
+    };
+
+    verbose("Storage file: " + ctx.list_dir.string() + "/tasks.json");
+    verbose("Requested page: " + std::to_string(ctx.page_number));
+    verbose("Page size: " + std::to_string(ctx.page_size));
 
     try {
+        std::cout << "Fetching existing tasks...\n";
         tasks = repo.get_paginated(ctx.page_number, ctx.page_size);
     }
     catch (const std::runtime_error& e) {
@@ -162,9 +171,12 @@ void run_list(const core::Context& ctx, storage::JsonTaskRepository& repo) {
         return;
     }
 
+    std::cout << '\n';
     for (core::Task t : tasks) {
         std::cout << utils::task_compact(t);
     }
+    std::cout << '\n';
+    verbose ("End of page reached.");
 
     std::cout << "Page : "<< ctx.page_number << '\n';
     std::cout << "Size : "<< ctx.page_size << '\n';
