@@ -18,7 +18,6 @@ namespace commands {
 // Initializes a new project directory and default configuration files.
 //
 // Idempotent: existing files are preserved.
-// WARN: Ungraceful error handling.
 void run_init(const core::Context& ctx) {
     namespace fs = std::filesystem;
 
@@ -76,11 +75,18 @@ void run_init(const core::Context& ctx) {
     }
 }
 
-// WARN: Ungraceful error handling.
 void run_add(const core::Context& ctx, storage::JsonTaskRepository& repo) {
-    std::cout << "Fetching existing tasks...\n";
-    auto tasks = repo.get_all();
-    std::cout << "Loaded " << std::to_string(tasks.size()) << " existing tasks.\n";
+    std::vector<core::Task> tasks;
+
+    try {
+        std::cout << "Fetching existing tasks...\n";
+        tasks = repo.get_all();
+        std::cout << "Loaded " << std::to_string(tasks.size()) << " existing tasks.\n";
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << "Error: " << e.what() << '\n';
+        return;
+    }
 
     auto verbose = [&](const std::string& msg) {
         if (ctx.verbose) {
@@ -121,7 +127,13 @@ void run_add(const core::Context& ctx, storage::JsonTaskRepository& repo) {
 
     verbose("Creating task: \"" + ctx.title + "\"");
 
-    repo.add(new_task);
+    try {
+        repo.add(new_task);
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << "Error: " << e.what() << '\n';
+        return;
+    }
     verbose("Task persisted to repository.");
 
     std::cout << "Added task #" << new_task.id << " " << new_task.title << "\n";
@@ -129,11 +141,18 @@ void run_add(const core::Context& ctx, storage::JsonTaskRepository& repo) {
 
 // TODO: Add filtering (completed, due, etc.)
 // TODO: Verbose mode.
-// WARN: Ungraceful error handling.
 void run_list(const core::Context& ctx, storage::JsonTaskRepository& repo) {
+    std::vector<core::Task> tasks;
     std::cout << "Fetching existing tasks...\n";
 
-    auto tasks = repo.get_paginated(ctx.page_number, ctx.page_size);
+    try {
+        tasks = repo.get_paginated(ctx.page_number, ctx.page_size);
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << "Error: " << e.what() << '\n';
+        return;
+    }
+
     int len = tasks.size();
 
     std::cout << "Loaded " << std::to_string(len) << " existing tasks.\n";
@@ -147,18 +166,22 @@ void run_list(const core::Context& ctx, storage::JsonTaskRepository& repo) {
         std::cout << utils::task_compact(t);
     }
 
-    std::cout << "page : "<< ctx.page_number << "\n";
-    std::cout << "size : "<< ctx.page_size << "\n";
+    std::cout << "Page : "<< ctx.page_number << '\n';
+    std::cout << "Size : "<< ctx.page_size << '\n';
 }
 
 // TODO: Verbose mode.
-// WARN: Ungraceful error handling.
 void run_show(const core::Context& ctx, storage::JsonTaskRepository& repo) {
     std::cout << "Fetching task...\n";
 
-    auto task = repo.get_id(ctx.show_id);
-
-    std::cout << utils::task_detailed(task);
+    try {
+        auto task = repo.get_id(ctx.show_id);
+        std::cout << utils::task_detailed(task);
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << "Error: " << e.what() << '\n';
+        return;
+    }
 }
 
 }
