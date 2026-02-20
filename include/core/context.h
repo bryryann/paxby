@@ -10,12 +10,14 @@
 namespace core {
 
 // Existing CLI commands.
+// TODO: Delete, Export
 enum class Command {
     None,
     Init,
     Add,
     List,
     Show,
+    Done,
 };
 
 // Runtime configuration passed to all CLI commands.
@@ -42,6 +44,9 @@ struct Context {
 
     // 'show' properties
     std::size_t show_id;
+
+    // 'done' properties
+    std::size_t done_id;
 };
 
 }

@@ -135,7 +135,7 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
         ctx.command = core::Command::Show;
 
         if (optind >= argc) {
-            std::cerr << "No ID provided for show\n";
+            std::cerr << "No ID provided for 'show'\n";
             return CommandResult::ExitFailure;
         }
 
@@ -153,6 +153,31 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
             std::cerr << "Invalid ID provided\n";
             return CommandResult::ExitFailure;
         }
+    }
+    // --- done ---
+    else if (cmd == "done") {
+        ctx.command = core::Command::Done;
+
+        if (optind >= argc) {
+            std::cerr << "No ID provided for 'done'\n";
+            return CommandResult::ExitFailure;
+        }
+
+        try {
+            auto tmp = std::stoull(argv[optind++]);
+
+            if (tmp > std::numeric_limits<size_t>::max()) {
+                std::cerr << "ID out of range\n";
+                return CommandResult::ExitFailure;
+            }
+
+            ctx.done_id = static_cast<size_t>(tmp);
+        }
+        catch (const std::exception&) {
+            std::cerr << "Invalid ID provided\n";
+            return CommandResult::ExitFailure;
+        }
+
     }
 
     // --- unknown command ---
