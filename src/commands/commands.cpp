@@ -196,4 +196,17 @@ void run_show(const core::Context& ctx, storage::JsonTaskRepository& repo) {
     }
 }
 
+void run_done(const core::Context& ctx, storage::JsonTaskRepository& repo) {
+    std::cout << "Fetching task...\n";
+
+    try {
+        repo.set_completed(ctx.done_id);
+        std::cout << "Marked task #" << ctx.done_id << " as completed.\n";
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << "Error: " << e.what() << '\n';
+        return;
+    }
+}
+
 }

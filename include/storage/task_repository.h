@@ -23,6 +23,8 @@ public:
     virtual void save_all(const std::vector<core::Task>& tasks) = 0;
 
     virtual void add(const core::Task& task) = 0;
+
+    virtual void set_completed(std::size_t id) = 0;
 };
 
 }

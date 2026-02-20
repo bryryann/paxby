@@ -65,8 +65,7 @@ void run(const core::Context &ctx, storage::JsonTaskRepository& repo) {
             break;
 
         case core::Command::Done:
-            std::cout << "done\n";
-            std::cout << "id provided: " << ctx.done_id << '\n';
+            commands::run_done(ctx, repo);
 
             break;
 

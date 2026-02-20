@@ -24,6 +24,8 @@ public:
 
     void add(const core::Task& task) override;
 
+    void set_completed(std::size_t id) override;
+
 private:
     std::filesystem::path file_path_;
 

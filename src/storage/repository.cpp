@@ -130,6 +130,48 @@ void JsonTaskRepository::add(const core::Task& task) {
 
 }
 
+void JsonTaskRepository::set_completed(std::size_t id) {
+    validate_storage();
+
+    std::ifstream in(file_path_);
+    nlohmann::json j;
+
+    try {
+        in >> j;
+    }
+    catch (const nlohmann::json::parse_error&) {
+        throw std::runtime_error(
+            "Failed to parse tasks.json (file may be corrupted)."
+        );
+    }
+
+    if (!j.contains("tasks") || !j["tasks"].is_array()) {
+        throw std::runtime_error("Invalid tasks file format.");
+    }
+
+    bool found = false;
+    for (auto& task : j["tasks"]) {
+        if (task.contains("id") && task["id"] == id) {
+            task["completed"] = true;
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        throw std::runtime_error("Task not found.");
+    }
+
+    std::ofstream out(file_path_);
+    if (!out) {
+        throw std::runtime_error(
+            "Failed to open tasks.json for writing."
+        );
+    }
+
+    out << j.dump(2);
+}
+
 void JsonTaskRepository::validate_storage() {
     if (!std::filesystem::exists(file_path_)) {
         throw std::runtime_error("Storage not initialized. Run `paxby init` first.");
