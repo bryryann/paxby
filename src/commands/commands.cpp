@@ -210,4 +210,17 @@ void run_done(const core::Context& ctx, storage::JsonTaskRepository& repo) {
     }
 }
 
+void run_delete(const core::Context& ctx, storage::JsonTaskRepository& repo) {
+    std::cout << "Fetching task...\n";
+
+    try {
+        repo.remove(ctx.del_id);
+        std::cout << "Deleted task #" << ctx.del_id << '\n';
+    }
+    catch (const std::runtime_error& e) {
+        std::cerr << "Error: " << e.what() << '\n';
+        return;
+    }
+}
+
 }

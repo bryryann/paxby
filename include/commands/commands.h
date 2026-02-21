@@ -19,4 +19,6 @@ void run_show(const core::Context& ctx, storage::JsonTaskRepository& repo);
 
 void run_done(const core::Context& ctx, storage::JsonTaskRepository& repo);
 
+void run_delete(const core::Context& ctx, storage::JsonTaskRepository& repo);
+
 }

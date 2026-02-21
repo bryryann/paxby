@@ -70,7 +70,7 @@ void run(const core::Context &ctx, storage::JsonTaskRepository& repo) {
             break;
 
         case core::Command::Delete:
-            std::cout << "ID to delete: " << ctx.del_id << '\n';
+            commands::run_delete(ctx, repo);
 
             break;
 
