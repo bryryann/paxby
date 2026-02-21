@@ -130,6 +130,43 @@ void JsonTaskRepository::add(const core::Task& task) {
 
 }
 
+void JsonTaskRepository::remove(std::size_t id) {
+    validate_storage();
+
+    std::ifstream in(file_path_);
+    nlohmann::json j;
+
+    try {
+        in >> j;
+    } catch (const nlohmann::json::parse_error&) {
+        throw std::runtime_error(
+            "Failed to parse tasks.json (file may be corrupted)."
+        );
+    }
+
+    if (!j.contains("tasks") || !j["tasks"].is_array()) {
+        throw std::runtime_error("Invalid tasks file format.");
+    }
+
+    auto& tasks = j["tasks"];
+    bool found = false;
+
+    for (auto it = tasks.begin(); it != tasks.end(); ++it) {
+        if (it->contains("id") && (*it)["id"] == id) {
+            tasks.erase(it);
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        throw std::runtime_error("Task not found.");
+    }
+
+    std::ofstream out(file_path_);
+    out << j.dump(2);
+}
+
 void JsonTaskRepository::set_completed(std::size_t id) {
     validate_storage();
 
