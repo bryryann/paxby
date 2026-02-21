@@ -179,7 +179,31 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
         }
 
     }
+    // --- delete ---
+    else if (cmd == "delete") {
+        ctx.command = core::Command::Delete;
 
+        if (optind >= argc) {
+            std::cerr << "No ID provided to 'delete'\n";
+            return CommandResult::ExitFailure;
+        }
+
+        try {
+            auto tmp = std::stoull(argv[optind++]);
+
+            if (tmp > std::numeric_limits<size_t>::max()) {
+                std::cerr << "ID out of range\n";
+                return CommandResult::ExitFailure;
+            }
+
+            ctx.del_id = static_cast<size_t>(tmp);
+        }
+        catch (const std::exception&) {
+            std::cerr << "Invalid ID provided\n";
+            return CommandResult::ExitFailure;
+        }
+
+    }
     // --- unknown command ---
     else {
         std::cerr << "Unknown command: " << cmd << "\n";
