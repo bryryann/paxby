@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <optional>
@@ -11,10 +12,10 @@
 namespace core {
 
 // Task priority
-enum Priority {
-    Low,
-    Medium,
-    High,
+enum class Priority : uint32_t {
+    Low = 0,
+    Medium = 1,
+    High = 1,
 };
 
 // Task object to be stored in tasks.json

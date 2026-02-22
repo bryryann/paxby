@@ -8,7 +8,6 @@ namespace storage {
 BinTaskRepository::BinTaskRepository(const std::filesystem::path& app_dir)
     : file_path_(app_dir / "tasks.bin") {}
 
-
 void BinTaskRepository::validate_storage() {
     if (!std::filesystem::exists(file_path_)) {
         throw std::runtime_error("Storage not initialized. Run `paxby ini` first.");

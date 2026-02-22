@@ -54,7 +54,7 @@ void run_init(const core::Context& ctx) {
         const char magic[4] = {'T', 'S', 'K', '1'};
         out.write(magic, 4);
 
-        uint32_t count = 0;
+        uint64_t count = 0;
         out.write(reinterpret_cast<const char*>(&count), sizeof(count));
 
         verbose("Created file '" + tasks_file.string() + "'");
