@@ -15,7 +15,7 @@ namespace core {
 enum class Priority : uint32_t {
     Low = 0,
     Medium = 1,
-    High = 1,
+    High = 2,
 };
 
 // Task object to be stored in tasks.json

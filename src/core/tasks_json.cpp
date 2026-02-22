@@ -26,7 +26,6 @@ inline Priority priority_from_string(const std::string& s) {
     throw std::runtime_error("Unknown priority: " + s);
 }
 
-
 void to_json(json& j, const Task& t) {
     j = json{
         {"id", t.id},
