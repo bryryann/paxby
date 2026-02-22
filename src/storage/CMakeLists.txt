@@ -1,4 +1,5 @@
 target_sources(paxby
     PRIVATE
-        repository.cpp
+        bin_repository.cpp
+        json_repository.cpp
 )
