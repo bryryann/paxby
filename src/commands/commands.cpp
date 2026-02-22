@@ -41,37 +41,60 @@ void run_init(const core::Context& ctx) {
     }
 
     // Default files created during initialization.
-    std::unordered_map<std::string, std::string> files = {
-        {"tasks.json", "{ \"tasks\": [] }\n"},
-        {"config.json", "{}\n"},
-    };
+    fs::path tasks_file = dir / "tasks.bin";
 
-    for (const auto& [name, content] : files) {
-        fs::path file = dir / name;
-
-        if (fs::exists(file)) {
-            if (!fs::is_regular_file(file)) {
-                throw std::runtime_error(
-                    "'" + file.string() + "' exists and is not a regular file"
-                );
-            }
-
-            verbose("Skipped existing file " + file.string());
-
-            continue;
-        }
-
-        std::ofstream out(file);
+    if (!fs::exists(tasks_file)) {
+        std::ofstream out(tasks_file, std::ios::binary);
         if (!out) {
-            throw std::runtime_error("Failed to create file '" + file.string() + "'");
+            throw std::runtime_error(
+                "Failed to create file '" + tasks_file.string() + "'"
+            );
         }
 
-        out << content;
-        verbose("Created file " + file.string());
+        const char magic[4] = {'T', 'S', 'K', '1'};
+        out.write(magic, 4);
+
+        uint32_t count = 0;
+        out.write(reinterpret_cast<const char*>(&count), sizeof(count));
+
+        verbose("Created file '" + tasks_file.string() + "'");
+    } else {
+        if (!fs::is_regular_file(tasks_file)) {
+            throw std::runtime_error(
+                "'" + tasks_file.string() + "' exists and is not a regular file"
+            );
+        }
+
+        verbose("Skipped existing file '" + tasks_file.string() + "'");
+    }
+
+    fs::path config_file = dir / "config.json";
+
+    if (!fs::exists(config_file)) {
+        std::ofstream out(config_file);
+        if (!out) {
+            throw std::runtime_error(
+                "Failed to create file '" + config_file.string() + "'"
+            );
+        }
+
+        out << "{}\n";
+
+        verbose("Created file '" + config_file.string() + "'");
+    } else {
+        if (!fs::is_regular_file(config_file)) {
+            throw std::runtime_error(
+                "'" + config_file.string() + "' exists and is not a regular file"
+            );
+        }
+
+        verbose("Skipped existing file '" + config_file.string() + "'");
     }
 
     if (!ctx.verbose) {
-        std::cout << "Initialize project in " << dir.parent_path().string() << "\n";
+        std::cout << "Initialized project in "
+                  << dir.parent_path().string()
+                  << '\n';
     }
 }
 
