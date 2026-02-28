@@ -11,9 +11,7 @@ class BinTaskRepository : public TaskRepository {
 public:
     explicit BinTaskRepository(const std::filesystem::path& app_dir);
 
-    /*
     std::vector<core::Task> get_all() override;
-    */
 
     core::Task get_id(std::size_t id) override;
 
