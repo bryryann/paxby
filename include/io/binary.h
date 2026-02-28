@@ -5,7 +5,7 @@
 
 namespace io {
 
-void writestring(std::ofstream& out, const std::string& str);
+void writestring(std::ostream& out, const std::string& str);
 
 std::string readstring(std::ifstream& in);
 

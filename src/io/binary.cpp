@@ -6,7 +6,7 @@ namespace io {
 
 // Writes a string to a binary file stream.
 // Format: [8 bytes: string size][N bytes: string data]
-void writestring(std::ofstream& out, const std::string& str) {
+void writestring(std::ostream& out, const std::string& str) {
     uint64_t size = str.size();
 
     // Write the size of the string to the file first.
