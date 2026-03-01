@@ -5,6 +5,7 @@
 
 #include "cli/cli.h"
 #include "commands/commands.h"
+#include "storage/task_repository.h"
 
 #include <iostream>
 
@@ -38,7 +39,7 @@ void print_help() {
 }
 
 
-void run(const core::Context &ctx, storage::JsonTaskRepository& repo) {
+void run(const core::Context &ctx, storage::TaskRepository& repo) {
     if (ctx.verbose) {
         std::cout << "Verbose mode enabled\n";
     }

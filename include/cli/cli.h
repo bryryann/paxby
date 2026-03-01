@@ -6,7 +6,7 @@
 #pragma once
 
 #include "core/context.h"
-#include "storage/json_task_repository.h"
+#include "storage/task_repository.h"
 
 #include <getopt.h>
 
@@ -20,6 +20,6 @@ extern struct option list_options[];
 
 void print_help();
 
-void run(const core::Context &ctx, storage::JsonTaskRepository &repo);
+void run(const core::Context &ctx, storage::TaskRepository &repo);
 
 }

@@ -5,20 +5,20 @@
 #pragma once
 
 #include "core/context.h"
-#include "storage/json_task_repository.h"
+#include "storage/task_repository.h"
 
 namespace commands {
 
 void run_init(const core::Context& ctx);
 
-void run_add(const core::Context& ctx, storage::JsonTaskRepository& repo);
+void run_add(const core::Context& ctx, storage::TaskRepository& repo);
 
-void run_list(const core::Context& ctx, storage::JsonTaskRepository& repo);
+void run_list(const core::Context& ctx, storage::TaskRepository& repo);
 
-void run_show(const core::Context& ctx, storage::JsonTaskRepository& repo);
+void run_show(const core::Context& ctx, storage::TaskRepository& repo);
 
-void run_done(const core::Context& ctx, storage::JsonTaskRepository& repo);
+void run_done(const core::Context& ctx, storage::TaskRepository& repo);
 
-void run_delete(const core::Context& ctx, storage::JsonTaskRepository& repo);
+void run_delete(const core::Context& ctx, storage::TaskRepository& repo);
 
 }

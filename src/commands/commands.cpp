@@ -98,7 +98,7 @@ void run_init(const core::Context& ctx) {
     }
 }
 
-void run_add(const core::Context& ctx, storage::JsonTaskRepository& repo) {
+void run_add(const core::Context& ctx, storage::TaskRepository& repo) {
     std::vector<core::Task> tasks;
 
     try {
@@ -163,7 +163,7 @@ void run_add(const core::Context& ctx, storage::JsonTaskRepository& repo) {
 }
 
 // TODO: Add filtering (completed, due, etc.)
-void run_list(const core::Context& ctx, storage::JsonTaskRepository& repo) {
+void run_list(const core::Context& ctx, storage::TaskRepository& repo) {
     std::vector<core::Task> tasks;
 
     auto verbose = [&](const std::string& msg) {
@@ -206,7 +206,7 @@ void run_list(const core::Context& ctx, storage::JsonTaskRepository& repo) {
 }
 
 // TODO: Verbose mode.
-void run_show(const core::Context& ctx, storage::JsonTaskRepository& repo) {
+void run_show(const core::Context& ctx, storage::TaskRepository& repo) {
     std::cout << "Fetching task...\n";
 
     try {
@@ -220,7 +220,7 @@ void run_show(const core::Context& ctx, storage::JsonTaskRepository& repo) {
 }
 
 // TODO: Verbose mode.
-void run_done(const core::Context& ctx, storage::JsonTaskRepository& repo) {
+void run_done(const core::Context& ctx, storage::TaskRepository& repo) {
     std::cout << "Fetching task...\n";
 
     try {
@@ -233,7 +233,7 @@ void run_done(const core::Context& ctx, storage::JsonTaskRepository& repo) {
     }
 }
 
-void run_delete(const core::Context& ctx, storage::JsonTaskRepository& repo) {
+void run_delete(const core::Context& ctx, storage::TaskRepository& repo) {
     std::cout << "Fetching task...\n";
 
     try {
