@@ -20,9 +20,9 @@ public:
         std::size_t page_number,
         std::size_t page_size
     ) override;
+    */
 
     void save_all(const std::vector<core::Task>& tasks) override;
-    */
 
     void add(const core::Task& task) override;
 

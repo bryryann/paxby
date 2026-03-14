@@ -86,6 +86,55 @@ core::Task BinTaskRepository::get_id(std::size_t id) {
     throw std::runtime_error("Task not found.");
 }
 
+void BinTaskRepository::save_all(const std::vector<core::Task>& tasks) {
+    validate_storage();
+
+    std::ofstream out(
+        file_path_,
+        std::ios::binary | std::ios::trunc
+    );
+
+    if (!out) {
+        throw std::runtime_error("Failed to open storage file.");
+    }
+
+    // magic
+    out.write(reinterpret_cast<const char*>("TSK1"), 4);
+
+    // task count
+    uint64_t task_count = tasks.size();
+    out.write(reinterpret_cast<const char*>(&task_count), sizeof(task_count));
+
+    for (const auto& task : tasks) {
+        uint32_t id = static_cast<uint32_t>(task.id);
+        out.write(reinterpret_cast<const char*>(&id), sizeof(id));
+
+        uint8_t completed = task.completed ? 1 : 0;
+        out.write(reinterpret_cast<const char*>(&completed), sizeof(completed));
+
+        uint32_t priority = static_cast<uint32_t>(task.priority);
+        out.write(reinterpret_cast<const char*>(&priority), sizeof(priority));
+
+        io::writestring(out, task.title);
+
+        io::writestring(out, task.created_at);
+
+        uint8_t has_due = task.due_date.has_value() ? 1 : 0;
+        out.write(reinterpret_cast<const char*>(&has_due), sizeof(has_due));
+
+        if (has_due) {
+            io::writestring(out, *task.due_date);
+        }
+
+        uint64_t tag_count = task.tags.size();
+        out.write(reinterpret_cast<const char*>(&tag_count), sizeof(tag_count));
+
+        for (const auto& tag : task.tags) {
+            io::writestring(out, tag);
+        }
+    }
+}
+
 // WARN: unused
 void BinTaskRepository::add(const core::Task& task) {
     validate_storage();
