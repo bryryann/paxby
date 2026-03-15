@@ -89,6 +89,7 @@ std::vector<core::Task> JsonTaskRepository::get_paginated(
         return {};
     }
 
+    // TODO: 0-based pagination. Update to 1-based.
     std::size_t start = page_number * page_size;
 
     if (start >= total) {

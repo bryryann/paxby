@@ -88,6 +88,35 @@ core::Task BinTaskRepository::get_id(std::size_t id) {
 }
 
 // WARN: Not used. May not work as intended.
+std::vector<core::Task> BinTaskRepository::get_paginated(
+    std::size_t page_number,
+    std::size_t page_size
+) {
+    if (page_size == 0) {
+        throw std::runtime_error("page_size cannot be zero.");
+    }
+
+    if (page_number == 0) {
+        throw std::runtime_error("page_number must be greater than or equal to 1.");
+    }
+
+    auto tasks = get_all();
+
+    std::size_t start = (page_number - 1) * page_size;
+
+    if (start >= tasks.size()) {
+        return {};
+    }
+
+    std::size_t end = std::min(start + page_size, tasks.size());
+
+    return std::vector<core::Task>(
+        tasks.begin() + start,
+        tasks.begin() + end
+    );
+}
+
+// WARN: Not used. May not work as intended.
 void BinTaskRepository::save_all(const std::vector<core::Task>& tasks) {
     validate_storage();
 
@@ -218,6 +247,7 @@ void BinTaskRepository::remove(std::size_t id) {
     save_all(tasks);
 }
 
+// WARN: Not used. May not work as intended.
 void BinTaskRepository::set_completed(std::size_t id) {
     auto tasks = get_all();
 

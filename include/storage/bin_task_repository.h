@@ -15,12 +15,10 @@ public:
 
     core::Task get_id(std::size_t id) override;
 
-    /*
     std::vector<core::Task> get_paginated(
         std::size_t page_number,
         std::size_t page_size
     ) override;
-    */
 
     void save_all(const std::vector<core::Task>& tasks) override;
 
