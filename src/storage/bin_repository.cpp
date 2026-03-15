@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cstring>
 #include <fstream>
 
@@ -9,7 +10,7 @@ namespace storage {
 BinTaskRepository::BinTaskRepository(const std::filesystem::path& app_dir)
     : file_path_(app_dir / "tasks.bin") {}
 
-// WARN: unused
+// WARN: Not used. May not work as intended.
 std::vector<core::Task> BinTaskRepository::get_all() {
     validate_storage();
 
@@ -74,7 +75,7 @@ std::vector<core::Task> BinTaskRepository::get_all() {
     return tasks;
 }
 
-// WARN: unused
+// WARN: Not used. May not work as intended.
 core::Task BinTaskRepository::get_id(std::size_t id) {
     auto tasks = get_all();
     for (auto& task : tasks) {
@@ -86,6 +87,7 @@ core::Task BinTaskRepository::get_id(std::size_t id) {
     throw std::runtime_error("Task not found.");
 }
 
+// WARN: Not used. May not work as intended.
 void BinTaskRepository::save_all(const std::vector<core::Task>& tasks) {
     validate_storage();
 
@@ -135,7 +137,7 @@ void BinTaskRepository::save_all(const std::vector<core::Task>& tasks) {
     }
 }
 
-// WARN: unused
+// WARN: Not used. May not work as intended.
 void BinTaskRepository::add(const core::Task& task) {
     validate_storage();
 
@@ -193,6 +195,47 @@ void BinTaskRepository::add(const core::Task& task) {
     task_count++;
     file.seekp(4); // back to right after magic
     file.write(reinterpret_cast<const char*>(&task_count), sizeof(task_count));
+}
+
+// WARN: Not used. May not work as intended.
+void BinTaskRepository::remove(std::size_t id) {
+    auto tasks = get_all();
+
+    auto it = std::remove_if(
+        tasks.begin(),
+        tasks.end(),
+        [id](const core::Task& task) {
+            return task.id == id;
+        }
+    );
+
+    if (it == tasks.end()) {
+        throw std::runtime_error("Task not found.");
+    }
+
+    tasks.erase(it, tasks.end());
+
+    save_all(tasks);
+}
+
+void BinTaskRepository::set_completed(std::size_t id) {
+    auto tasks = get_all();
+
+    auto it = std::find_if(
+        tasks.begin(),
+        tasks.end(),
+        [id](const core::Task& task) {
+            return task.id == id;
+        }
+    );
+
+    if (it == tasks.end()) {
+        throw std::runtime_error("Task not found.");
+    }
+
+    it->completed = true;
+
+    save_all(tasks);
 }
 
 void BinTaskRepository::validate_storage() {
