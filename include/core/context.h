@@ -21,11 +21,20 @@ enum class Command {
     Delete,
 };
 
+enum FileType {
+    Binary,
+    Json
+};
+
 // Runtime configuration passed to all CLI commands.
 struct Context {
+    // config.json file properties
+    FileType storage_file_type = FileType::Binary;
+ 
+    // cmd properties 
     bool show_help = false;
     bool verbose = false;
-
+ 
     Command command = Command::None;
 
     // 'init' properties

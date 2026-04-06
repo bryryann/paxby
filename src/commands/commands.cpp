@@ -9,6 +9,7 @@
 #include "utils/storage.h"
 #include "utils/string.h"
 
+#include <nlohmann/json.hpp>
 #include <fstream>
 #include <filesystem>
 #include <unordered_map>
@@ -79,7 +80,11 @@ void run_init(const core::Context& ctx) {
             );
         }
 
-        out << "{}\n";
+        nlohmann::json default_config = {
+            {"storage_file_type", "bin"},
+        };
+
+        out << default_config.dump(4) << '\n';
 
         verbose("Created file '" + config_file.string() + "'");
     } else {
