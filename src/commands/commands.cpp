@@ -5,6 +5,7 @@
 #include "commands/commands.h"
 #include "core/tasks_json.h"
 #include "storage/json_task_repository.h"
+#include "storage/bin_task_repository.h"
 #include "utils/storage.h"
 #include "utils/string.h"
 
@@ -172,7 +173,7 @@ void run_list(const core::Context& ctx, storage::TaskRepository& repo) {
         }
     };
 
-    verbose("Storage file: " + ctx.list_dir.string() + "/tasks.json");
+    verbose("Storage file: " + ctx.list_dir.string() + "/tasks.bin");
     verbose("Requested page: " + std::to_string(ctx.page_number));
     verbose("Page size: " + std::to_string(ctx.page_size));
 

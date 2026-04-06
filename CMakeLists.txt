@@ -29,6 +29,7 @@ add_subdirectory(src/cli)
 add_subdirectory(src/storage)
 add_subdirectory(src/utils)
 add_subdirectory(src/commands)
+add_subdirectory(src/io)
 
 target_include_directories(paxby
     PUBLIC
