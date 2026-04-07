@@ -30,6 +30,7 @@ add_subdirectory(src/storage)
 add_subdirectory(src/utils)
 add_subdirectory(src/commands)
 add_subdirectory(src/io)
+add_subdirectory(src/config)
 
 target_include_directories(paxby
     PUBLIC

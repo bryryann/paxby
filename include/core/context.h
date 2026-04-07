@@ -28,9 +28,6 @@ enum FileType {
 
 // Runtime configuration passed to all CLI commands.
 struct Context {
-    // config.json file properties
-    FileType storage_file_type = FileType::Binary;
- 
     // cmd properties 
     bool show_help = false;
     bool verbose = false;

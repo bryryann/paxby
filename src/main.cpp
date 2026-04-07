@@ -7,21 +7,35 @@
 #include "cli/command_parser.h"
 #include "storage/json_task_repository.h"
 #include "storage/bin_task_repository.h"
+#include "config/config_json.h"
 
 int main(int argc, char *argv[]) {
     core::Context ctx;
 
     std::filesystem::path app_dir = ".paxby";
+    std::filesystem::path config_dir = app_dir / "config.json";
+
+    auto cfg = config::load_config(config_dir);
 
     storage::JsonTaskRepository json_repo(app_dir);
     storage::BinTaskRepository  bin_repo(app_dir);
 
     switch (cli::parse_command(argc, argv, ctx)) {
         case cli::CommandResult::Run:
-            cli::run(ctx, bin_repo);
+            switch (cfg.storage_file_type) {
+                case core::FileType::Binary:
+                    cli::run(ctx, bin_repo);
+                    break;
+
+                case core::FileType::Json:
+                    cli::run(ctx, json_repo);
+                    break;
+            }
             return 0;
+
         case cli::CommandResult::ExitSuccess:
             return 0;
+
         case cli::CommandResult::ExitFailure:
             return 1;
     }
