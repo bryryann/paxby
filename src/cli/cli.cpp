@@ -31,6 +31,10 @@ struct option list_options[] = {
     {nullptr, 0,                 nullptr,  0 }
 };
 
+struct option export_options[] = {
+    {"format", required_argument, nullptr, 'f'},
+};
+
 void print_help() {
     std::cout << "usage: paxby [OPTION]... [ARG]...\n"
               << "options:\n"
@@ -72,6 +76,12 @@ void run(const core::Context &ctx, storage::TaskRepository& repo) {
 
         case core::Command::Delete:
             commands::run_delete(ctx, repo);
+
+            break;
+
+        case core::Command::Export:
+            // TODO: Define and implement run_export() function.
+            std::cout << "Export tasks.\n";
 
             break;
 

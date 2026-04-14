@@ -10,7 +10,6 @@
 namespace core {
 
 // Existing CLI commands.
-// TODO: Export
 enum class Command {
     None,
     Init,
@@ -19,6 +18,11 @@ enum class Command {
     Show,
     Done,
     Delete,
+    Export,
+};
+
+enum ExportFormat {
+    JSON,
 };
 
 enum FileType {
@@ -57,6 +61,9 @@ struct Context {
 
     // 'delete' properties
     std::size_t del_id;
+
+    // 'export' properties
+    ExportFormat export_format;
 };
 
 }

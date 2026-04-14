@@ -18,6 +18,8 @@ extern struct option add_options[];
 
 extern struct option list_options[];
 
+extern struct option export_options[];
+
 void print_help();
 
 void run(const core::Context &ctx, storage::TaskRepository &repo);

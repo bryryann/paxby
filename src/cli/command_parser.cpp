@@ -7,6 +7,7 @@
 #include "cli/command_parser.h"
 #include "utils/string.h"
 
+#include <cstring>
 #include <iostream>
 #include <getopt.h>
 #include <string>
@@ -203,6 +204,30 @@ CommandResult parse_command(int argc, char **argv, core::Context &ctx) {
             return CommandResult::ExitFailure;
         }
 
+    }
+    // --- export ---
+    else if (cmd == "export") {
+        ctx.command = core::Command::Export;
+
+        optind = 1;
+
+        int export_opt;
+        while ((export_opt = getopt_long(sub_argc, sub_argv, "f:", export_options, nullptr)) != -1) {
+            switch (export_opt) {
+                case 'f':
+                    if (strcmp(optarg, "json") == 0) {
+                        ctx.export_format = core::ExportFormat::JSON;
+                    } else {
+                        std::cerr << "Export format not supported: " << optarg << '\n';
+                        return CommandResult::ExitFailure;
+                    }
+
+                    break;
+
+                default:
+                    return CommandResult::ExitFailure;
+            }
+        }
     }
     // --- unknown command ---
     else {
