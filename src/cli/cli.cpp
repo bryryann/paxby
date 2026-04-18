@@ -81,7 +81,7 @@ void run(const core::Context &ctx, storage::TaskRepository& repo) {
 
         case core::Command::Export:
             // TODO: Define and implement run_export() function.
-            std::cout << "Export tasks.\n";
+            std::cout << "W.I.P. - Export command not yet functional\n";
 
             break;
 
