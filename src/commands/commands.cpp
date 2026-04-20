@@ -81,7 +81,7 @@ void run_init(const core::Context& ctx) {
         }
 
         nlohmann::json default_config = {
-            {"storage_file_type", "bin"},
+            {"storage_file_type", "binary"},
         };
 
         out << default_config.dump(4) << '\n';

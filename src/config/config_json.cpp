@@ -6,8 +6,11 @@
 namespace config {
 
 Config load_config(const std::filesystem::path& config_path) {
+    Config cfg;
+    cfg.storage_file_type = core::FileType::Binary;
+
     if (!std::filesystem::exists(config_path)) {
-        throw std::runtime_error("config.json not found");
+        return cfg;
     }
 
     std::ifstream file(config_path);
@@ -17,8 +20,6 @@ Config load_config(const std::filesystem::path& config_path) {
 
     nlohmann::json json;
     file >> json;
-
-    Config cfg;
 
     if (json.contains("storage_file_type")) {
         std::string type = json["storage_file_type"];

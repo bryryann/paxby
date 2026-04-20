@@ -15,13 +15,14 @@ int main(int argc, char *argv[]) {
     std::filesystem::path app_dir = ".paxby";
     std::filesystem::path config_dir = app_dir / "config.json";
 
-    auto cfg = config::load_config(config_dir);
-
     storage::JsonTaskRepository json_repo(app_dir);
     storage::BinTaskRepository  bin_repo(app_dir);
 
-    switch (cli::parse_command(argc, argv, ctx)) {
-        case cli::CommandResult::Run:
+    auto cmd = cli::parse_command(argc, argv, ctx);
+    switch (cmd) {
+        case cli::CommandResult::Run: {
+            auto cfg = config::load_config(config_dir);
+
             switch (cfg.storage_file_type) {
                 case core::FileType::Binary:
                     cli::run(ctx, bin_repo);
@@ -32,6 +33,7 @@ int main(int argc, char *argv[]) {
                     break;
             }
             return 0;
+        }
 
         case cli::CommandResult::ExitSuccess:
             return 0;
