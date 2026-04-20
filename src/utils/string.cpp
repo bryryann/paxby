@@ -71,8 +71,8 @@ std::string task_detailed(core::Task& task) {
             if (i != task.tags.size() - 1) {
                 oss << ", ";
             }
-            oss << "\n";
         }
+        oss << "\n";
     }
 
     oss << "----------------------------------------\n";

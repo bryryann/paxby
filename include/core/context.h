@@ -50,7 +50,7 @@ struct Context {
     // 'list' properties
     std::filesystem::path list_dir = ".";
     bool paginated = true;
-    std::size_t page_number = 0;
+    std::size_t page_number = 1;
     std::size_t page_size   = 10;
 
     // 'show' properties
