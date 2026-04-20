@@ -18,10 +18,10 @@ option(ENABLE_WARNINGS "Enable compiler warnings" ON)
 # libraries and subdirectories
 find_package(nlohmann_json REQUIRED)
 
-add_library(paxby)
+add_library(paxby_core)
 
 add_library(paxby::paxby
-    ALIAS paxby
+    ALIAS paxby_core
 )
 
 add_subdirectory(src/core)
@@ -32,21 +32,21 @@ add_subdirectory(src/commands)
 add_subdirectory(src/io)
 add_subdirectory(src/config)
 
-target_include_directories(paxby
+target_include_directories(paxby_core
     PUBLIC
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
 )
 
-target_compile_features(paxby PUBLIC cxx_std_20)
+target_compile_features(paxby_core PUBLIC cxx_std_20)
 
-add_executable(paxby-app 
+add_executable(paxby
     src/main.cpp
 )
 
-target_link_libraries(paxby-app 
+target_link_libraries(paxby
     PRIVATE
-        paxby
+        paxby_core
         nlohmann_json::nlohmann_json
 )
 
