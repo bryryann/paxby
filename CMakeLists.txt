@@ -16,7 +16,21 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 option(ENABLE_WARNINGS "Enable compiler warnings" ON)
 
 # libraries and subdirectories
-find_package(nlohmann_json REQUIRED)
+option(PAXBY_USE_SYSTEM_JSON "Use system-installed nlohmann_json" ON)
+
+if (PAXBY_USE_SYSTEM_JSON)
+    find_package(nlohmann_json QUIET)
+endif()
+
+if (NOT nlohmann_json_FOUND)
+    include(FetchContent)
+    FetchContent_Declare(
+        nlohmann_json
+        GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG v3.11.3
+    )
+    FetchContent_MakeAvailable(nlohmann_json)
+endif()
 
 add_library(paxby_core)
 
@@ -48,6 +62,23 @@ target_link_libraries(paxby
     PRIVATE
         paxby_core
         nlohmann_json::nlohmann_json
+)
+
+include(GNUInstallDirs)
+
+install(TARGETS paxby
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+install(TARGETS paxby_core
+    EXPORT paxbyTargets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 # warnings
