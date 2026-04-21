@@ -81,8 +81,6 @@ src/
 
 ---
 
-# paxby
-
 ![C++](https://img.shields.io/badge/C%2B%2B-20-blue.svg)
 ![CMake](https://img.shields.io/badge/CMake-%3E%3D3.20-brightgreen.svg)
 ![CLI](https://img.shields.io/badge/CLI-tool-lightgrey.svg)
